@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 # Add the src directory to the Python pah
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from minesweeper.minesweeper import Minesweeper
+from src.minesweeper.minesweeper import Minesweeper
 
 
 app = Flask(__name__)
