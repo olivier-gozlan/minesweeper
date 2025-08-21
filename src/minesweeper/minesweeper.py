@@ -2,6 +2,7 @@
 
 # minesweeper.py
 #version recupere
+#pour test deploy
 import random
 
 
