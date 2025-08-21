@@ -3,7 +3,7 @@
 import random
 
 class Minesweeper:
-    def __init__(self, rows:int, cols:int, num_mines:int)->None:
+    def __init__(self, rows:int, cols:int, num_mines:int):
         self.rows = rows
         self.cols = cols
         self.num_mines = num_mines
