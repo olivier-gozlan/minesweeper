@@ -57,4 +57,3 @@ select = [ # Sets of rules to check for
 #pour l'erreur sur le random dans le fichier minesweeper.py
 [tool.ruff.lint.per-file-ignores]
 "src/minesweeper/minesweeper.py" = ["S311"]
-
