@@ -2,7 +2,6 @@
 # minesweeper.py
 import random
 
-
 class Minesweeper:
     def __init__(self, rows:int, cols:int, num_mines:int)->None:
         self.rows = rows
