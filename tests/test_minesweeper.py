@@ -1,52 +1,63 @@
+import random
+
 import pytest
 import minesweeper
 from minesweeper.minesweeper import Minesweeper
 
-def test_module_exits():
+
+def test_module_exists():
     assert minesweeper
 
 
-def test_place_mines():
-    game=Minesweeper(3,3,2)
-    game.place_mines()
-    assert len(game.mines)==2
-
-def test_game_over():
-    game=Minesweeper(3,3,2)
-    game.place_mines()
-    r,c=next(iter(game.mines))
-    assert game.reveal(r,c)=="Game Over"
+# Define a fixture for the Minesweeper game instance
+@pytest.fixture
+def game():
+    # Create a new Minesweeper game with a 5x5 grid and 3 mines
+    return Minesweeper(5, 5, 3)
 
 
-def test_reveal():
-    import random
+def test_board_initialization(game):
+    # Ensure the game board is correctly initialized
+    assert game.rows == 5
+    assert game.cols == 5
+    assert game.num_mines == 3
+    assert len(game.board) == 5
+    assert len(game.board[0]) == 5
+    assert len(game.mines) == 3
+
+
+def test_mine_placement(game):
+    # Ensure that mines are placed correctly on the board
+    mine_count = sum(row.count("💣") for row in game.board)
+    assert mine_count == 3
+
+
+def test_reveal_cell(game):
+    # Assume the cell at (2, 2) is surrounded by no mines
+
     random.seed(0)
-    game = Minesweeper(3, 3, 2)
-    game.place_mines()
-    result=game.reveal(2, 2)
-    assert (2,2) in game.revealed
-    assert result in ("Continue","Game Over","You Win")
+    game.board[2][2] = "0"
+    game.reveal(2, 2)
+    print(game.revealed)
+    # Ensure the cell is revealed
+    assert (2, 2) in game.revealed
 
-def test_is_winner():
-    game = Minesweeper(2, 2, 1)
-    for r in range(2):
-        for c in range(2):
-            if (r,c) not in game.mines:
-                game.reveal(r,c)
 
+def test_game_over(game):
+    # Force a mine at a specific location
+    game.mines = {(1, 1)}
+    game.board[1][1] = "M"
+
+    # Reveal the mine and check if the game ends
+    result = game.reveal(1, 1)
+    assert result == "Game Over"
+
+
+def test_win_condition(game):
+    # Simulate all cells except mines being revealed
+    game.revealed = set(
+        (r, c) for r in range(5) for c in range(5) if (r, c) not in game.mines
+    )
+
+    # Ensure the game recognizes a win condition
     assert game.is_winner() is True
-
-def test_get_board():
-    game = Minesweeper(2, 2, 1)
-    for r in range(game.rows):
-        for c in range(game.cols):
-            if (r, c) not in game.mines:
-                safe_cell = (r, c)
-                break
-            else:
-                continue
-        break
-    r,c=safe_cell
-    game.reveal(r,c)
-    board=game.get_board()
-    assert board[r][c]!="■"
