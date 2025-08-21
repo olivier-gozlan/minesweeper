@@ -1,6 +1,7 @@
 """This module implements the Minesweeper game."""
 
 # minesweeper.py
+#version recupere
 import random
 
 
