@@ -3,7 +3,7 @@ import sys
 import os
 from flask import Flask, render_template, request, redirect, url_for
 
-# Add the src directory to the Python path
+# Add the src directory to the Python pah
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from minesweeper.minesweeper import Minesweeper
 
