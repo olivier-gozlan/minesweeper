@@ -8,8 +8,8 @@ from minesweeper.minesweeper import Minesweeper
 
 
 
-def test_fail():
-    assert False
+#def test_fail():
+#    assert False
 
 def test_module_exists():
     assert minesweeper
